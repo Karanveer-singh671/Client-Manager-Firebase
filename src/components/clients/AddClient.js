@@ -122,4 +122,9 @@ AddClient.propTypes = {
 	settings: PropTypes.object.isRequired
 };
 
-export default AddClient;
+export default compose(
+	firestoreConnect(),
+	connect((state, props) => ({
+		settings: state.settings
+	}))
+)(AddClient);
