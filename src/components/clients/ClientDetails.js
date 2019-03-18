@@ -8,7 +8,39 @@ import { firestoreConnect } from 'react-redux-firebase';
 import React, { Component } from 'react';
 
 class ClientDetails extends Component {
+	state = {
+		showBalanceUpdate: false,
+		balanceUpdateAmount: ''
+	};
+
 	render() {
+		const { client } = this.props;
+		const { showBalanceUpdate, balanceUpdateAmount } = this.state;
+
+		let balanceForm = '';
+		// If balance form should display
+		if (showBalanceUpdate) {
+			balanceForm = (
+				<form onSubmit={this.balanceSubmit}>
+					<div className="input-group">
+						<input
+							type="text"
+							className="form-control"
+							name="balanceUpdateAmount"
+							placeholder="Add New Balance"
+							value={balanceUpdateAmount}
+							onChange={this.onChange}
+						/>
+						<div className="input-group-append">
+							<input type="submit" value="Update" className="btn btn-outline-dark" />
+						</div>
+					</div>
+				</form>
+			);
+		} else {
+			balanceForm = null;
+		}
+
 		if (client) {
 			return (
 				<div>
