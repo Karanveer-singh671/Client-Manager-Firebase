@@ -25,7 +25,13 @@ class AddClient extends Component {
 			newClient.balance = 0;
 		}
 
-		firestore.add({ collection: 'clients' }, newClient).then(() => history.push('/'));
+		firestore
+			.add(
+				{ collection: 'clients' },
+				// redirect to "/"
+				newClient
+			)
+			.then(() => history.push('/'));
 	};
 
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
