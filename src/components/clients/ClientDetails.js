@@ -4,14 +4,38 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-
-import React, { Component } from 'react';
+import Spinner from '../layout/Spinner';
+import classnames from 'classnames';
 
 class ClientDetails extends Component {
 	state = {
 		showBalanceUpdate: false,
 		balanceUpdateAmount: ''
 	};
+
+	// Update balance
+	balanceSubmit = (e) => {
+		e.preventDefault();
+
+		const { client, firestore } = this.props;
+		const { balanceUpdateAmount } = this.state;
+
+		const clientUpdate = {
+			balance: parseFloat(balanceUpdateAmount)
+		};
+
+		// Update in firestore
+		firestore.update({ collection: 'clients', doc: client.id }, clientUpdate);
+	};
+
+	// Delete client
+	onDeleteClick = () => {
+		const { client, firestore, history } = this.props;
+
+		firestore.delete({ collection: 'clients', doc: client.id }).then(history.push('/'));
+	};
+
+	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	render() {
 		const { client } = this.props;
@@ -114,6 +138,10 @@ class ClientDetails extends Component {
 		}
 	}
 }
+
+ClientDetails.propTypes = {
+	firestore: PropTypes.object.isRequired
+};
 
 export default compose(
 	firestoreConnect((props) => [ { collection: 'clients', storeAs: 'client', doc: props.match.params.id } ]),
