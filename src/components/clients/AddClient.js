@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from './../layout/Dashboard';
 class AddClient extends Component {
+	state = {
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
+		balance: ''
+	};
+
+	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
 	render() {
+		const { disableBalanceOnAdd } = this.props.settings;
 		return (
 			<div>
 				<div className="row">
