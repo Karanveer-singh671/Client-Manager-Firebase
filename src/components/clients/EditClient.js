@@ -22,7 +22,7 @@ class EditClient extends Component {
 
 		const { client, firestore, history } = this.props;
 
-		// Updated Client
+		// Updated Client, will be submitted to firestore
 		const updClient = {
 			firstName: this.firstNameInput.current.value,
 			lastName: this.lastNameInput.current.value,
