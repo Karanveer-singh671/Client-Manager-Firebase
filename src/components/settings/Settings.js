@@ -11,6 +11,12 @@ class Settings extends Component {
 		return <div />;
 	}
 }
+Settings.propTypes = {
+	settings: PropTypes.object.isRequired,
+	setDisableBalanceOnAdd: PropTypes.func.isRequired,
+	setDisableBalanceOnEdit: PropTypes.func.isRequired,
+	setAllowRegistration: PropTypes.func.isRequired
+};
 
 export default connect(
 	(state, props) => ({
