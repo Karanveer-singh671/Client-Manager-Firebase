@@ -7,6 +7,25 @@ import { firebaseConnect } from 'react-redux-firebase';
 import React, { Component } from 'react';
 
 class Login extends Component {
+	state = {
+		email: '',
+		password: ''
+	};
+	onSubmit = (e) => {
+		e.preventDefault();
+		const { firebase } = this.props;
+		const { email, password } = this.state;
+
+		firebase
+			.login({
+				email,
+				password
+			})
+			.catch((err) => notifyUser('Invalid Login Credentials', 'error'));
+	};
+
+	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
 	render() {
 		return (
 			<div className="row">
