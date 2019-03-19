@@ -20,6 +20,8 @@ class AppNavbar extends Component {
 		}
 	}
 	render() {
+		const { isAuthenticated } = this.state;
+		const { auth } = this.props;
 		return (
 			<nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
 				<div className="container">
@@ -31,12 +33,21 @@ class AppNavbar extends Component {
 					</button>
 					<div className="collapse navbar-collapse" id="navbarMain">
 						<ul className="navbar-nav mr-auto">
+							{isAuthenticated ? (
+								<li className="nav-item">
+									<Link to="/" className="nav-link">
+										Dashboard
+									</Link>
+								</li>
+							) : null}
+						</ul>
+						{isAuthenticated ? (
 							<li className="nav-item">
 								<Link to="/" className="nav-link">
 									Dashboard
 								</Link>
 							</li>
-						</ul>
+						) : null}
 					</div>
 				</div>
 			</nav>
