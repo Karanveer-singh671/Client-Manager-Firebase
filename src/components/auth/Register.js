@@ -78,7 +78,7 @@ class Register extends Component {
 	}
 }
 
-Login.propTypes = {
+Register.propTypes = {
 	firebase: PropTypes.object.isRequired,
 	notify: PropTypes.object.isRequired,
 	notifyUser: PropTypes.func.isRequired
