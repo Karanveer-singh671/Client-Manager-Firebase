@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+
 class AddClient extends Component {
 	state = {
 		firstName: '',
@@ -25,19 +26,14 @@ class AddClient extends Component {
 			newClient.balance = 0;
 		}
 
-		firestore
-			.add(
-				{ collection: 'clients' },
-				// redirect to "/"
-				newClient
-			)
-			.then(() => history.push('/'));
+		firestore.add({ collection: 'clients' }, newClient).then(() => history.push('/'));
 	};
 
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
 	render() {
 		const { disableBalanceOnAdd } = this.props.settings;
+
 		return (
 			<div>
 				<div className="row">

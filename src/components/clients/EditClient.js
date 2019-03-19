@@ -22,7 +22,7 @@ class EditClient extends Component {
 
 		const { client, firestore, history } = this.props;
 
-		// Updated Client, will be submitted to firestore
+		// Updated Client
 		const updClient = {
 			firstName: this.firstNameInput.current.value,
 			lastName: this.lastNameInput.current.value,
@@ -34,6 +34,7 @@ class EditClient extends Component {
 		// Update client in firestore
 		firestore.update({ collection: 'clients', doc: client.id }, updClient).then(history.push('/'));
 	};
+
 	render() {
 		const { client } = this.props;
 		const { disableBalanceOnEdit } = this.props.settings;
@@ -126,3 +127,15 @@ class EditClient extends Component {
 		}
 	}
 }
+
+EditClient.propTypes = {
+	firestore: PropTypes.object.isRequired
+};
+
+export default compose(
+	firestoreConnect((props) => [ { collection: 'clients', storeAs: 'client', doc: props.match.params.id } ]),
+	connect(({ firestore: { ordered }, settings }, props) => ({
+		client: ordered.client && ordered.client[0],
+		settings
+	}))
+)(EditClient);
