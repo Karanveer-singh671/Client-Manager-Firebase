@@ -1,7 +1,24 @@
-import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 
-export default class AppNavbar extends Component {
+class AppNavbar extends Component {
+	state = {
+		isAuthenticated: false
+	};
+
+	static getDerivedStateFromProps(props, state) {
+		const { auth } = props;
+
+		if (auth.uid) {
+			return { isAuthenticated: true };
+		} else {
+			return { isAuthenticated: false };
+		}
+	}
 	render() {
 		return (
 			<nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
@@ -26,3 +43,15 @@ export default class AppNavbar extends Component {
 		);
 	}
 }
+AppNavbar.propTypes = {
+	firebase: PropTypes.object.isRequired,
+	auth: PropTypes.object.isRequired
+};
+
+export default compose(
+	firebaseConnect(),
+	connect((state, props) => ({
+		auth: state.firebase.auth,
+		settings: state.settings
+	}))
+)(AppNavbar);
